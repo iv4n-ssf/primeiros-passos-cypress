@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "cypress": "^15.0.0"
+    "cypress": "^15.10.0"
   },
   "name": "primeiros-passos-cypress",
   "version": "1.0.0",
@@ -177,5 +177,15 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iv4n-ssf/primeiros-passos-cypress.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/iv4n-ssf/primeiros-passos-cypress/issues"
+  },
+  "homepage": "https://github.com/iv4n-ssf/primeiros-passos-cypress#readme"
 }

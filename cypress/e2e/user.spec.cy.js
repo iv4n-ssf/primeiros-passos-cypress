@@ -30,9 +30,16 @@ describe('Orange HRM Tests', () => {
     //cy.visit('/pim/viewMyDetails')
     // cy.get("[href='/web/index.php/pim/viewMyDetails']").click()
     cy.get(selectorsList.myInfoButton).click()
-    cy.get(selectorsList.firsNameField).type('First Name Test')
-    cy.get(selectorsList.middleName).type('Middle Name Test')
-    cy.get(selectorsList.lastNameField).type('Last Name Test')
+    cy.get(selectorsList.firsNameField).clear().type('FirstNameTest')
+    cy.get(selectorsList.middleName).clear().type('MiddleNameTest')
+    cy.get(selectorsList.lastNameField).clear().type('LastNameTest')
+
+    cy.get(selectorsList.genericField).eq(3).clear().type('NicknameTest')
+    cy.get(selectorsList.genericField).eq(4).clear().type('EmployeeId')
+    cy.get(selectorsList.genericField).eq(5).clear().type('OtherIdTest')
+    cy.get(selectorsList.genericField).eq(6).clear().type('DriversLicenseNumberTest')
+    cy.get(selectorsList.genericField).eq(8).clear().type('snnNumberTest')
+    cy.get(selectorsList.genericField).eq(9).clear().type('sinNumberTest')
   })
 
   it('Login - Fail', () => {
