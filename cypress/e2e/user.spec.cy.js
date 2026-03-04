@@ -1,61 +1,72 @@
-import userDate from '../fixtures/users/user-data.json'
+// Arquivo de teste E2E.
+// Aqui descrevemos comportamento, não implementação.
+// Nenhum seletor deve existir neste arquivo.
+
+import userData from '../fixtures/users/user-data.json'
+import LoginPage from '../pages/loginPage'
+import MyInfoPage from '../pages/myInfoPage'
+
+// Instanciação das Pages.
+// Cada spec pode reutilizar essas instâncias.
+const loginPage = new LoginPage()
+const myInfoPage = new MyInfoPage()
 
 describe('Orange HRM Tests', () => {
 
-  const selectorsList = {
-    usernameField: "[name='username']",
-    passwordField: "[name='password']",
-    loginButton: ".oxd-button",
-    sectionTitleTopBar: ".oxd-topbar-header-breadcrumb-module",
-    dashboardGrid: ".orangehrm-dashboard-grid",
-    wrongCredentialAlert: ".oxd-alert",
-    myInfoButton: "[href='/web/index.php/pim/viewMyDetails']",
-    firsNameField: "[name='firstName']",
-    middleName: "[name='middleName']",
-    lastNameField: "[name='lastName']",
-    // CAMPO GENERICO
-    genericField: ".oxd-input--active",
-    dateField: "[placeholder='yyyy-dd-mm']",
-    dateCloseButton: ".--close",
-    submitButton: "[type='submit']"
-  }
+  // Cenário positivo: atualização de dados do usuário
+  it('User Info Update - Success', () => {
 
-  it.only('User Info Update - Success', () => {
+    // Acessa login
+    loginPage.accessLoginPage()
 
-    // LOGIN
-    cy.visit('/auth/login')
-    cy.get(selectorsList.usernameField).type(userDate.userSuccess.username)
-    cy.get(selectorsList.passwordField).type(userDate.userSuccess.password)
-    cy.get(selectorsList.loginButton).click()
-    cy.location('pathname').should('equal', '/web/index.php/dashboard/index')
-    cy.get(selectorsList.dashboardGrid)
-    // MY INFO
-    //cy.visit('/pim/viewMyDetails')
-    // cy.get("[href='/web/index.php/pim/viewMyDetails']").click()
-    cy.get(selectorsList.myInfoButton).click()
-    cy.get(selectorsList.firsNameField).clear().type('FirstNameTest')
-    cy.get(selectorsList.middleName).clear().type('MiddleNameTest')
-    cy.get(selectorsList.lastNameField).clear().type('LastNameTest')
+    // Realiza login com usuário válido
+    loginPage.login(
+      userData.userSuccess.username,
+      userData.userSuccess.password
+    )
 
-    // cy.get(selectorsList.genericField).eq(3).clear().type('NicknameTest')
-    cy.get(selectorsList.genericField).eq(3).clear().type('EmployeeId')
-    cy.get(selectorsList.genericField).eq(4).clear().type('OtherIdTest')
-    cy.get(selectorsList.genericField).eq(5).clear().type('DriversLicenseNumberTest')
-    cy.get(selectorsList.genericField).eq(6).clear().type('2026-03-10')
-    cy.get(selectorsList.dateCloseButton).click()
-    // cy.get(selectorsList.genericField).eq(7).clear().type('snnNumberTest')
-    // cy.get(selectorsList.genericField).eq(8).clear().type('sinNumberTest')
-    cy.get(selectorsList.submitButton).eq(0).click()
-    cy.get('body').should('contain', 'Successfully Updated')
-    cy.get('.oxd-toast-close')
+    // Validação de redirecionamento após login
+    cy.location('pathname')
+      .should('equal', '/web/index.php/dashboard/index')
+
+    // Acessa seção My Info
+    myInfoPage.accessMyInfo()
+
+    // Atualiza dados pessoais
+    myInfoPage.fillPersonalDetails(
+      'FirstNameTest',
+      'MiddleNameTest',
+      'LastNameTest'
+    )
+
+    // Atualiza dados complementares
+    myInfoPage.fillEmployeeDetails()
+
+    // Atualiza nacionalidade e salva
+    myInfoPage.selectNationality('Brazilian')
+    myInfoPage.save()
+
+    // Atualiza estado civil e salva
+    myInfoPage.selectMaritalStatus('Other')
+    myInfoPage.save()
+
+    // Valida mensagem final de sucesso
+    myInfoPage.validateUpdateSuccess()
   })
 
+
+  // Cenário negativo: tentativa de login inválido
   it('Login - Fail', () => {
-    cy.visit('/auth/login')
-    cy.get(selectorsList.usernameField).type(userDate.userFail.username)
-    cy.get(selectorsList.passwordField).type(userDate.userFail.password)
-    cy.get(selectorsList.loginButton).click()
-    cy.get(selectorsList.wrongCredentialAlert)
+
+    loginPage.accessLoginPage()
+
+    loginPage.login(
+      userData.userFail.username,
+      userData.userFail.password
+    )
+
+    // Validação encapsulada na própria Page
+    loginPage.checkLoginError()
   })
 
 })
