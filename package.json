@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "cypress": "^15.10.0"
+    "cypress": "^15.11.0"
   },
   "name": "primeiros-passos-cypress",
   "version": "1.0.0",
