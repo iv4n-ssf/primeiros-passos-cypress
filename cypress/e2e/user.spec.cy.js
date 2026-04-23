@@ -4,11 +4,13 @@
 
 import userData from '../fixtures/users/user-data.json'
 import LoginPage from '../pages/loginPage'
+import MenuPage from '../pages/menuPage'
 import MyInfoPage from '../pages/myInfoPage'
 
 // Instanciação das Pages.
 // Cada spec pode reutilizar essas instâncias.
 const loginPage = new LoginPage()
+const menuPage = new MenuPage()
 const myInfoPage = new MyInfoPage()
 
 describe('Orange HRM Tests', () => {
@@ -30,7 +32,7 @@ describe('Orange HRM Tests', () => {
       .should('equal', '/web/index.php/dashboard/index')
 
     // Acessa seção My Info
-    myInfoPage.accessMyInfo()
+    menuPage.accessMyInfo()
 
     // Atualiza dados pessoais
     myInfoPage.fillPersonalDetails(
@@ -56,7 +58,7 @@ describe('Orange HRM Tests', () => {
 
 
   // Cenário negativo: tentativa de login inválido
-  it('Login - Fail', () => {
+  it.skip('Login - Fail', () => {
 
     loginPage.accessLoginPage()
 

@@ -6,7 +6,7 @@ class MyInfoPage {
 
     // Mapeamento centralizado de todos os elementos utilizados na tela.
     selectors = {
-        myInfoButton: "[href='/web/index.php/pim/viewMyDetails']",
+
         firstNameField: "[name='firstName']",
         middleNameField: "[name='middleName']",
         lastNameField: "[name='lastName']",
@@ -14,11 +14,6 @@ class MyInfoPage {
         dateCloseButton: ".--close",
         submitButton: "[type='submit']",
         selectButton: ".oxd-select-text--arrow"
-    }
-
-    // Acessa a página de informações pessoais pelo menu lateral.
-    accessMyInfo() {
-        cy.get(this.selectors.myInfoButton).click()
     }
 
     // Atualiza os dados básicos do usuário.
