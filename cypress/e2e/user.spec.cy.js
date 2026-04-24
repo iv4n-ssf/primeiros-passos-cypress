@@ -2,10 +2,16 @@
 // Aqui descrevemos comportamento, não implementação.
 // Nenhum seletor deve existir neste arquivo.
 
-import userData from '../fixtures/users/user-data.json'
-import LoginPage from '../pages/loginPage'
-import MenuPage from '../pages/menuPage'
-import MyInfoPage from '../pages/myInfoPage'
+import userData from '../fixtures/users/user-data.json';
+import LoginPage from '../pages/loginPage';
+import MenuPage from '../pages/menuPage';
+import MyInfoPage from '../pages/myInfoPage';
+
+// carregando o Chance
+const Chance = require('chance');
+
+// Instantiate Chance so it can be used
+const chance = new Chance();
 
 // Instanciação das Pages.
 // Cada spec pode reutilizar essas instâncias.
@@ -35,14 +41,10 @@ describe('Orange HRM Tests', () => {
     menuPage.accessMyInfo()
 
     // Atualiza dados pessoais
-    myInfoPage.fillPersonalDetails(
-      'FirstNameTest',
-      'MiddleNameTest',
-      'LastNameTest'
-    )
+    myInfoPage.fillPersonalDetails(chance.first(), chance.last(), chance.last())
 
     // Atualiza dados complementares
-    myInfoPage.fillEmployeeDetails()
+    myInfoPage.fillEmployeeDetails('EmployeeId', 'OtherId', 'DriversLicenseNumber', '2026-03-10')
 
     // Atualiza nacionalidade e salva
     myInfoPage.selectNationality('Brazilian')
@@ -58,14 +60,11 @@ describe('Orange HRM Tests', () => {
 
 
   // Cenário negativo: tentativa de login inválido
-  it.skip('Login - Fail', () => {
+  it('Login - Fail', () => {
 
     loginPage.accessLoginPage()
 
-    loginPage.login(
-      userData.userFail.username,
-      userData.userFail.password
-    )
+    loginPage.login(userData.userFail.username, userData.userFail.password)
 
     // Validação encapsulada na própria Page
     loginPage.checkLoginError()

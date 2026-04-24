@@ -27,11 +27,11 @@ class MyInfoPage {
     // Atualiza campos adicionais do funcionário.
     // Obs: O uso de .eq() indica dependência de posição no DOM.
     // Caso o layout mude, essa parte é sensível a quebra.
-    fillEmployeeDetails() {
-        cy.get(this.selectors.genericField).eq(3).clear().type('EmployeeId')
-        cy.get(this.selectors.genericField).eq(4).clear().type('OtherIdTest')
-        cy.get(this.selectors.genericField).eq(5).clear().type('DriversLicenseNumberTest')
-        cy.get(this.selectors.genericField).eq(6).clear().type('2026-03-10')
+    fillEmployeeDetails(EmployeeId, OtherId, DriversLicenseNumber, driversLicenseDate) {
+        cy.get(this.selectors.genericField).eq(3).clear().type(EmployeeId)
+        cy.get(this.selectors.genericField).eq(4).clear().type(OtherId)
+        cy.get(this.selectors.genericField).eq(5).clear().type(DriversLicenseNumber)
+        cy.get(this.selectors.genericField).eq(6).clear().type(driversLicenseDate)
         cy.get(this.selectors.dateCloseButton).click()
     }
 
